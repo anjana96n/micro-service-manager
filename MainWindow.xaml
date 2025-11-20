@@ -1,0 +1,142 @@
+<Window x:Class="MicroserviceManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MicroserviceManager"
+        Title="Microservice Manager" Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <!-- Converters -->
+        <local:StatusConverter x:Key="StatusConverter"/>
+        <local:StatusColorConverter x:Key="StatusColorConverter"/>
+        <local:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        
+        <!-- Styles -->
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="5,5,5,0"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="250"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50" Padding="15">
+            <StackPanel>
+                <TextBlock Text="Microservice Manager" 
+                          FontSize="24" 
+                          FontWeight="Bold" 
+                          Foreground="White"/>
+                <TextBlock Text="Manage and run your Spring Boot microservices" 
+                          FontSize="12" 
+                          Foreground="#BDC3C7"
+                          Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Services List -->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Services" FontSize="16" FontWeight="Bold" Margin="5"/>
+            
+            <DataGrid Grid.Row="1" 
+                     x:Name="ServicesDataGrid"
+                     AutoGenerateColumns="False"
+                     CanUserAddRows="False"
+                     SelectionMode="Single"
+                     Margin="5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Service Name" Binding="{Binding Name}" Width="150"/>
+                    <DataGridTextColumn Header="Project Path" Binding="{Binding Path}" Width="300"/>
+                    <DataGridTextColumn Header="Command" Binding="{Binding Command}" Width="200"/>
+                    <DataGridTemplateColumn Header="Status" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding IsRunning, Converter={StaticResource StatusConverter}}" 
+                                          Foreground="{Binding IsRunning, Converter={StaticResource StatusColorConverter}}"
+                                          FontWeight="Bold"
+                                          HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Actions" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Content="▶ Start" 
+                                           Click="StartService_Click"
+                                           Tag="{Binding}"
+                                           Background="#27AE60"
+                                           Foreground="White"
+                                           IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+                                           Margin="2"/>
+                                    <Button Content="⬛ Stop" 
+                                           Click="StopService_Click"
+                                           Tag="{Binding}"
+                                           Background="#E74C3C"
+                                           Foreground="White"
+                                           IsEnabled="{Binding IsRunning}"
+                                           Margin="2"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="➕ Add Service" Click="AddService_Click" Background="#3498DB" Foreground="White"/>
+                <Button Content="✏️ Edit Service" Click="EditService_Click" Background="#F39C12" Foreground="White"/>
+                <Button Content="🗑️ Remove Service" Click="RemoveService_Click" Background="#E74C3C" Foreground="White"/>
+                <Button Content="▶ Start All" Click="StartAll_Click" Background="#27AE60" Foreground="White" FontWeight="Bold"/>
+                <Button Content="⬛ Stop All" Click="StopAll_Click" Background="#C0392B" Foreground="White" FontWeight="Bold"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Output Console -->
+        <Grid Grid.Row="2" Margin="10,0,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0">
+                <TextBlock Text="Console Output" FontSize="16" FontWeight="Bold" Margin="5" DockPanel.Dock="Left"/>
+                <Button Content="Clear" Click="ClearConsole_Click" DockPanel.Dock="Right" 
+                       Background="#95A5A6" Foreground="White" Width="80"/>
+            </DockPanel>
+            
+            <Border Grid.Row="1" BorderBrush="#BDC3C7" BorderThickness="1" Margin="5">
+                <ScrollViewer x:Name="ConsoleScrollViewer" VerticalScrollBarVisibility="Auto">
+                    <TextBox x:Name="ConsoleOutput"
+                            IsReadOnly="True"
+                            TextWrapping="Wrap"
+                            Background="#2C3E50"
+                            Foreground="#ECF0F1"
+                            FontFamily="Consolas"
+                            FontSize="11"
+                            BorderThickness="0"
+                            VerticalScrollBarVisibility="Auto"/>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
+

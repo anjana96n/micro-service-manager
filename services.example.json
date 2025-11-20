@@ -1,0 +1,31 @@
+[
+  {
+    "Name": "Gateway Service",
+    "Path": "D:\\Projects\\api-gateway",
+    "Command": "mvn spring-boot:run",
+    "IsRunning": false,
+    "ProcessId": 0
+  },
+  {
+    "Name": "Authorization Service",
+    "Path": "D:\\Projects\\authorization-service",
+    "Command": "mvn spring-boot:run -Dspring-boot.run.profiles=local",
+    "IsRunning": false,
+    "ProcessId": 0
+  },
+  {
+    "Name": "User Service",
+    "Path": "D:\\Projects\\user-service",
+    "Command": "gradlew bootRun",
+    "IsRunning": false,
+    "ProcessId": 0
+  },
+  {
+    "Name": "Product Service",
+    "Path": "D:\\Projects\\product-service",
+    "Command": "mvn clean spring-boot:run",
+    "IsRunning": false,
+    "ProcessId": 0
+  }
+]
+
