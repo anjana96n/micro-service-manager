@@ -2,7 +2,7 @@
 
 ## Overview
 
-Microservice Manager is a WPF (Windows Presentation Foundation) desktop application built with .NET 6.0 for managing multiple Java microservices.
+Microservice Manager is a WPF (Windows Presentation Foundation) desktop application built with .NET 8.0 for managing multiple Java microservices.
 
 ## Directory Structure
 
@@ -207,13 +207,14 @@ Creates optimized build in `bin\Release\`
 
 ### Standalone Executable
 ```powershell
-dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
+.\publish.ps1
 ```
-Creates single-file executable with embedded .NET runtime
+Creates ONE compressed, self-contained `dist\MicroserviceManager.exe` with the .NET runtime
+and the native WPF libraries embedded (`IncludeNativeLibrariesForSelfExtract`). No loose DLLs.
 
 ## Dependencies
 
-- **.NET 6.0 Runtime**: Windows desktop runtime
+- **.NET 8.0 Runtime**: Windows desktop runtime (embedded in the standalone build)
 - **Newtonsoft.Json**: JSON serialization (NuGet package)
 
 ## Platform Requirements

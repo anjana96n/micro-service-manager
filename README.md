@@ -14,7 +14,7 @@ A Windows desktop application for managing and running multiple Java/Spring Boot
 
 ## Prerequisites
 
-- .NET 6.0 SDK or higher ([Download here](https://dotnet.microsoft.com/download/dotnet/6.0))
+- .NET 8.0 SDK or higher ([Download here](https://dotnet.microsoft.com/download/dotnet/8.0))
 - Java Development Kit (JDK) for your Spring Boot projects
 - Maven (if using `mvn` commands)
 
@@ -38,16 +38,18 @@ A Windows desktop application for managing and running multiple Java/Spring Boot
 
 ## Creating a Standalone Executable
 
-To create a standalone `.exe` file that doesn't require .NET SDK to be installed:
+To create a **single** standalone `.exe` (no .NET install required on the target machine):
 
 ```powershell
-dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
+.\publish.ps1
 ```
 
-The executable will be created in:
+This produces one compressed, self-contained file (~69 MB, no loose DLLs):
 ```
-bin\Release\net6.0-windows\win-x64\publish\MicroserviceManager.exe
+dist\MicroserviceManager.exe
 ```
+(also copied under `bin\Release\net8.0-windows\win-x64\publish\`). Copy it to your Desktop or
+anywhere else and double-click — Windows 10/11 x64, nothing to install.
 
 ## How to Use
 
@@ -97,7 +99,12 @@ Note: You cannot remove a service while it's running. Stop it first.
 
 - All console output from running services appears in the **Console Output** section at the bottom
 - Each log line is prefixed with a timestamp and service name
-- Use the **Clear** button to clear the console output
+- **Show:** dropdown filters the console to a single service (or `All services` / `System`)
+- **Auto-clear (min):** dropdown wipes the console on an interval — pick `10` / `20` / `30` /
+  `60`, type any custom number of minutes, or `Off`. The setting is remembered between runs.
+- The console keeps only the most recent ~5000 lines **per service** in memory, so a chatty
+  service can no longer slow the app down over time
+- Use the **Clear** button to clear the console (only the filtered service if one is selected)
 
 ## Configuration Storage
 
@@ -106,7 +113,8 @@ Service configurations are automatically saved to:
 %APPDATA%\MicroserviceManager\services.json
 ```
 
-This ensures your configurations persist between application restarts.
+UI preferences (auto-clear interval, last console filter) are saved next to it in
+`settings.json`. Both persist between application restarts.
 
 ## Common Commands
 

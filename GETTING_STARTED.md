@@ -124,7 +124,7 @@ cd D:\My-Projects\Micro-run\MicroserviceManager
 .\publish.ps1
 ```
 
-This creates: `bin\Release\net6.0-windows\win-x64\publish\MicroserviceManager.exe`
+This creates one self-contained file: `dist\MicroserviceManager.exe` (~69 MB, no loose DLLs).
 
 You can:
 - Double-click to run

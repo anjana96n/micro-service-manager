@@ -8,6 +8,9 @@
 *.userosscache
 *.sln.docstates
 
+# Portable publish output
+dist/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

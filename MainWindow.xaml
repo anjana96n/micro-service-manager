@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:MicroserviceManager"
         Title="Microservice Manager" Height="600" Width="1000"
+        Icon="app.ico"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <!-- Converters -->
@@ -118,9 +119,30 @@
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0">
-                <TextBlock Text="Console Output" FontSize="16" FontWeight="Bold" Margin="5" DockPanel.Dock="Left"/>
-                <Button Content="Clear" Click="ClearConsole_Click" DockPanel.Dock="Right" 
+                <TextBlock Text="Console Output" FontSize="16" FontWeight="Bold" Margin="5"
+                          VerticalAlignment="Center" DockPanel.Dock="Left"/>
+
+                <Button Content="Clear" Click="ClearConsole_Click" DockPanel.Dock="Right"
                        Background="#95A5A6" Foreground="White" Width="80"/>
+
+                <TextBlock Text="Auto-clear (min):" VerticalAlignment="Center" Margin="15,5,3,5"
+                          DockPanel.Dock="Right"/>
+                <ComboBox x:Name="AutoClearCombo" DockPanel.Dock="Right"
+                         Width="80" Margin="5" IsEditable="True"
+                         SelectionChanged="AutoClearCombo_Changed"
+                         LostFocus="AutoClearCombo_Changed">
+                    <ComboBoxItem Content="Off"/>
+                    <ComboBoxItem Content="10"/>
+                    <ComboBoxItem Content="20"/>
+                    <ComboBoxItem Content="30"/>
+                    <ComboBoxItem Content="60"/>
+                </ComboBox>
+
+                <TextBlock Text="Show:" VerticalAlignment="Center" Margin="15,5,3,5"
+                          DockPanel.Dock="Left"/>
+                <ComboBox x:Name="FilterCombo" DockPanel.Dock="Left"
+                         Width="160" Margin="5"
+                         SelectionChanged="FilterCombo_Changed"/>
             </DockPanel>
             
             <Border Grid.Row="1" BorderBrush="#BDC3C7" BorderThickness="1" Margin="5">

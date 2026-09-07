@@ -2,13 +2,13 @@
 
 ## 1. Install Prerequisites
 
-Make sure you have .NET 6.0 SDK installed:
+Make sure you have .NET 8.0 SDK installed:
 ```powershell
 # Check if .NET is installed
 dotnet --version
 ```
 
-If not installed, download from: https://dotnet.microsoft.com/download/dotnet/6.0
+If not installed, download from: https://dotnet.microsoft.com/download/dotnet/8.0
 
 ## 2. Build and Run
 
@@ -39,13 +39,15 @@ Click the **▶ Start** button next to your service and watch the console output
 
 ## 5. Create Executable (Optional)
 
-To create a standalone .exe file:
+To create a single standalone .exe file (no .NET install needed on the target PC):
 
 ```powershell
-dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
+.\publish.ps1
 ```
 
-Find your .exe at: `bin\Release\net6.0-windows\win-x64\publish\MicroserviceManager.exe`
+Find your .exe at `dist\MicroserviceManager.exe` (a copy also lives in
+`bin\Release\net8.0-windows\win-x64\publish\`). Copy it anywhere — including your Desktop —
+and double-click.
 
 ---
 
